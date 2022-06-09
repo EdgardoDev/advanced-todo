@@ -36,3 +36,12 @@
   box-shadow: 0 0 5px #000;
   cursor: pointer;
 }
+
+.button-input:hover {
+  background-color: #5c6bc0;
+}
+
+.button-input:active {
+  transform: scale(0.8);
+  box-shadow: 0 0 3px #000;
+}
