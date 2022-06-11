@@ -112,6 +112,10 @@ input[type="input"] {
   color: #2e7d32;
 }
 
+.drags-active {
+  background-color: #2e7d32;
+}
+
 @media (max-width: 1100px) {
   .todo-list {
     width: 45%;
