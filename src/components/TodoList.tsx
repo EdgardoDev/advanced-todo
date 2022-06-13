@@ -1,49 +1,56 @@
 import React from "react"
-import { Droppable } from "react-beautiful-dnd"
 import { Todo } from "../model"
 import SingleTodo from "./SingleTodo"
+import { Droppable } from "react-beautiful-dnd"
 import "./styles.css"
 
-interface Props {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-  completedTodos: Todo[];
-  setCompletedTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+interface props {
+  todos: Array<Todo>;
+  setTodos: React.Dispatch<React.SetStateAction<Array<Todo>>>;
+  setCompletedTodos: React.Dispatch<React.SetStateAction<Array<Todo>>>;
+  completedTodos: Array<Todo>;
 }
 
-const TodoList:React.FC<Props> = ({todos, setTodos, completedTodos, setCompletedTodos}: Props) => {
+const TodoList: React.FC<props> = ({
+  todos,
+  setTodos,
+  completedTodos,
+  setCompletedTodos,
+}) => {
   return (
     <div className="todos-container">
       <Droppable droppableId="ToBeCompleted">
-        {
-          (provided, snapshot) => (
-            <div className={`todo-list ${snapshot.isDraggingOver ? "drag-active" : ""}`} ref={provided.innerRef} {...provided.droppableProps}>
+        {(provided) => (
+          <div
+            className="todo-list"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
               <span className="todo-header">To Be Completed</span>
-              {todos.map((todo, index) => (
+              {todos?.map((todo, index) => (
                 <SingleTodo
                   index={index}
+                  todos={todos}
                   todo={todo}
-                  todos={completedTodos}
                   key={todo.id}
                   setTodos={setTodos}
                 />
               ))}
               {provided.placeholder}
             </div>
-          )
-        }
+          )}
       </Droppable>
 
       <Droppable droppableId="AlreadyCompleted">
         {
-          (provided, snapshot) => (
-            <div className={`todo-list ${snapshot.isDraggingOver ? "drag-active" : ""}`} ref={provided.innerRef} {...provided.droppableProps}>
+          (provided) => (
+            <div className="todo-list" ref={provided.innerRef} {...provided.droppableProps}>
               <span className="todo-header completed">Already Completed</span>
-              {completedTodos.map((todo, index) => (
+              {completedTodos?.map((todo, index) => (
                 <SingleTodo
                   index={index}
-                  todo={todo}
                   todos={completedTodos}
+                  todo={todo}
                   key={todo.id}
                   setTodos={setCompletedTodos}
                 />

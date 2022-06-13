@@ -1,17 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Draggable } from "react-beautiful-dnd";
 import { FaEdit, FaTrashAlt, FaCheck } from "react-icons/fa";
 import { Todo } from "../model";
+import { Draggable } from "react-beautiful-dnd";
 import "./styles.css";
 
-type Props = {
+const SingleTodo: React.FC<{
   index: number;
   todo: Todo;
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
-}
-
-const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
+  todos: Array<Todo>;
+  setTodos: React.Dispatch<React.SetStateAction<Array<Todo>>>;
+}> = ({ index, todo, todos, setTodos }) => {
 
   const [edit, setEdit] = useState<boolean>(false);
   const [editTodo, setEditTodo] = useState<string>(todo.todo);
@@ -37,7 +35,6 @@ const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
   };
 
   const inputRef = useRef<HTMLInputElement>(null)
-
   useEffect(() => {
     inputRef.current?.focus();
   }, [edit]);
@@ -45,10 +42,9 @@ const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
   
   return (
     <Draggable draggableId={todo.id.toString()} index={index}>
-      {
-        (provided, snapshot) => (
+      {(provided, snapshot) => (
           <form
-            className={`form-single-todos ${snapshot.isDragging ? "drags-active" : ""}`}
+            className={`form-single-todos ${snapshot.isDragging ? "drag-completed" : ""}`}
             onSubmit={(e) => handleEditTodo(e, todo.id)}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
